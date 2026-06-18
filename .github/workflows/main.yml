@@ -5,7 +5,7 @@ on:
     branches: [ "main", "master" ]
   pull_request:
     branches: [ "main", "master" ]
-  workflow_dispatch: # Allows you to manually trigger the build from the GitHub UI
+  workflow_dispatch: # Allows you to manually trigger the build from the GitHub Actions tab
 
 jobs:
   build:
@@ -18,12 +18,12 @@ jobs:
     - name: Set up MSBuild
       uses: microsoft/setup-msbuild@v2
 
-    - name: Build Solution (x64 Release)
+    - name: Build Project (x64 Release)
       run: |
-        msbuild byte_stinker.sln /p:Configuration=Release /p:Platform=x64
+        msbuild byte_stinker/byte_stinker.vcxproj /p:Configuration=Release /p:Platform=x64
 
     - name: Upload Compiled Binary
       uses: actions/upload-artifact@v4
       with:
         name: byte-stinker-x64-release
-        path: x64/Release/byte_stinker.exe
+        path: byte_stinker/x64/Release/byte_stinker.exe
